@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Add a gradient background -->
+<div class="container pt-4">
+  <div class="row p-0 mt-4">
+    <!-- TODO Form -->
+    <div class="col-lg-4 mx-auto">
+      <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="m-0">Add New TODO</h2>
+        </div>
+        <div class="card-body p-4">
+          <form action="/add-todo/" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <button type="submit" class="btn btn-primary btn-block shadow-sm hover-shadow">Add TODO</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO List -->
+    <div class="col-lg-8 mt-4">
+      {% if todos|length == 0 %}
+        <div class="alert alert-info text-center">
+          <p class="m-0" style="font-size: 24px; font-weight: 600;">No Todos</p>
+        </div>
+      {% else %}
+        <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-body p-4">
+            <table class="table table-bordered table-hover">
+              <thead class="bg-primary text-white">
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for todo in todos %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ todo.title }}</td>
+                  <td>
+                    {% if todo.status == 'C' %}
+                    <span class="text-success font-weight-bold">Completed</span>
+                    {% else %}
+                    <span class="text-warning font-weight-bold">Pending</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ todo.priority }}</td>
+                  <td>
+                    <a href="delete-todo/{{ todo.id }}" title="Delete" class="text-danger hover-color">🗑️</a>
+                    {% if todo.status == 'P' %}
+                    <a href="change-status/{{ todo.id }}/C" title="Mark Completed" class="text-success hover-color">✅</a>
+                    {% else %}
+                    <a href="change-status/{{ todo.id }}/P" title="Mark Pending" class="text-warning hover-color">🕗</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Add some custom styles -->
+<style>
+  body {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  }
+  .hover-shadow:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .hover-color:hover {
+    color: #007bff;
+  }
+  .card-header {
+    border-bottom: 1px solid #dee2e6;
+  }
+  .table th, .table td {
+    vertical-align: middle;
+  }
+</style>
+
+{% endblock content %}

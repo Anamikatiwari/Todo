@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-pP+TT61tAEd1o/Jt+Me64ihN4W4C0D5sN+NDzQ5UOVI1D/VVhLsh1YjqUn+4/X2j" crossorigin="anonymous">
+    <title>Hello World</title>
+    <style>
+      /* Modern Font and Background */
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f7f9fc;
+        color: #333;
+      }
+
+      /* Navbar Styling with Gradient */
+      .navbar {
+        background: linear-gradient(90deg, #1d2671 0%, #c33764 100%);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: bold;
+        font-size: 1.8rem;
+        color: #fff !important;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff !important;
+        margin-left: 15px;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #ffde7d !important;
+      }
+
+      /* Hero Section with Overlay */
+      .hero {
+        background: url('https://source.unsplash.com/1600x900/?design') no-repeat center center;
+        background-size: cover;
+        height: 75vh;
+        color: #fff;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .hero::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(29, 38, 113, 0.7);
+        mix-blend-mode: multiply;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        z-index: 1;
+        position: relative;
+        color: #ffde7d;
+      }
+
+      .hero p {
+        font-size: 1.5rem;
+        z-index: 1;
+        position: relative;
+        color: #f7f9fc;
+      }
+
+      .container {
+        margin-top: 3rem;
+      }
+
+      /* Button Styling */
+      .btn-custom {
+        background-color: #c33764;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 25px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .btn-custom:hover {
+        background-color: #1d2671;
+        transform: scale(1.05);
+      }
+
+      /* Footer with Gradient */
+      footer {
+        background: linear-gradient(90deg, #c33764 0%, #1d2671 100%);
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      footer p {
+        margin: 0;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">TODO</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">Signup</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Hero Section Start -->
+    <div class="hero">
+      <h1>Welcome to TODO</h1>
+      <p>Manage your tasks with ease and style</p>
+    </div>
+    <!-- Hero Section End -->
+
+    <!-- Changing Content -->
+    <div class="container">
+      {% block content %}
+      {% endblock content %}
+    </div>
+    <!-- End Content -->
+
+    <!-- Footer Start -->
+    <footer>
+      <p>&copy; 2024 TODO. All rights reserved.</p>
+    </footer>
+    <!-- Footer End -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

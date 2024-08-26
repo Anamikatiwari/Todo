@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-wEmeW2F5V8e7d6G3P7QxKz0z6VmW+Q4C+Fbd7Fgt5S+vQgQzJc7wFZf2z6Kh9d0" crossorigin="anonymous">
+  
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #eaeaea; /* Light gray background for contrast */
+      font-family: 'Poppins', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .content {
+      padding: 3rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .content:hover {
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    }
+
+    h1 {
+      color: #333;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      text-align: center; /* Centered heading for a balanced look */
+    }
+
+    p {
+      color: #555;
+      line-height: 1.7;
+      font-size: 1.1rem;
+      text-align: center; /* Centered text for consistency */
+    }
+
+    /* Button Styles */
+    .btn-primary {
+      background-color: #6a1b9a; /* Matching dark purple */
+      border-color: #6a1b9a;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #5e35b1; /* Slightly darker purple on hover */
+      border-color: #5e35b1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+      .content {
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+
+  <title>Beautiful Design</title>
+</head>
+<body>
+
+  <!-- Navbar Start -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #6a1b9a, #ab47bc);">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">MyApp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/signup">Signup</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+
+  <!-- Changing Content -->
+  <div class="content">
+    {% block content %}
+      <!-- Example Content -->
+      <h1>Welcome to the Application</h1>
+      <p>Your content goes here. This area will adapt based on the content you provide.</p>
+      <a href="#" class="btn btn-primary">Learn More</a> <!-- Example button -->
+    {% endblock content %}
+  </div>
+  <!-- Changing Content End -->
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQpC0JpC5Hl9zS50sO8fkeOErh1Ugm60d3bD54ibGZw+xtdCZ+0v2YQfw+8lXw3J" crossorigin="anonymous"></script>
+
+</body>
+</html>
