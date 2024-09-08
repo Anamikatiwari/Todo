@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #ff6f61, #6a1b9a); /* Vibrant background gradient */
+    font-family: 'Poppins', sans-serif; /* Stylish font */
+  }
+  .container {
+    max-width: 400px; /* Adjusted container width */
+    padding-top: 100px; /* Increased top padding for centering */
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-8px); /* Lift on hover */
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+  }
+  .card-header {
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa); /* Gradient header background */
+    color: white;
+    text-align: center;
+    padding: 2.5rem; /* Increased padding */
+    border-bottom: 2px solid #d1c4e9; /* Slightly thicker border */
+  }
+  .card-header h2 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.75rem; /* Larger font size */
+  }
+  .card-header p {
+    color: #e1bee7; /* Light color for description */
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  .card-body {
+    padding: 2rem; /* Increased padding */
+  }
+  .form-group {
+    margin-bottom: 1.5rem; /* Increased margin for form groups */
+  }
+  .form-group label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .form-group input:focus {
+    border-color: #8e24aa; /* Matching border color on focus */
+    box-shadow: 0 4px 8px rgba(142, 36, 170, 0.3); /* Matching shadow on focus */
+    outline: none;
+  }
+  .btn-primary {
+    background-color: #8e24aa;
+    border-color: #8e24aa;
+    color: white;
+    padding: 0.75rem 1.5rem; /* Adjusted padding */
+    border-radius: 30px; /* Rounded corners for button */
+    font-size: 1.1rem; /* Larger font size */
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  .btn-primary:hover {
+    background-color: #6a1b9a; /* Darker color on hover */
+    border-color: #6a1b9a;
+    transform: scale(1.05); /* Slightly scale on hover */
+  }
+  .btn-primary:focus {
+    box-shadow: none;
+  }
+</style>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-md-12 col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">Login Here</h2>
+          <p>Access your account using your credentials.</p>
+        </div>
+        <div class="card-body">
+          <form action='/login/' method='POST'>
+            {% csrf_token %}
+            <div class="form-group">
+              {{ form.as_p|safe }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

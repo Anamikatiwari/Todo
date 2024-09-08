@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  /* Beautiful background with a soft gradient */
+  body {
+    background: linear-gradient(135deg, #f0f9ff, #c0f2e7);
+    font-family: 'Poppins', sans-serif; /* Modern, stylish font */
+  }
+
+  /* Centralized container */
+  .container {
+    max-width: 600px;
+    margin-top: 50px;
+  }
+
+  /* Stylish card with subtle shadows and smooth hover effect */
+  .card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Gradient header with contrasting white text */
+  .card-header {
+    background: linear-gradient(135deg, #4e54c8, #8f94fb); /* Vibrant gradient */
+    color: #ffffff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 20px;
+  }
+
+  .card-header h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* Stylish buttons with hover effects */
+  .btn-success {
+    background-color: #4caf50; /* Harmonizing color with the header */
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-success:hover {
+    background-color: #43a047;
+    transform: scale(1.05);
+  }
+
+  /* Form labels and inputs styling */
+  label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  /* Error styling */
+  .error {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: -10px;
+  }
+
+</style>
+
+<div class="container mx-auto">
+  <div class="flex justify-center">
+    <div class="card p-6 rounded-lg shadow-xl">
+      <div class="card-header text-center">
+        <h2>Create Account</h2>
+      </div>
+      <div class="card-body">
+
+        <form method="post" action=".">
+          {% csrf_token %}
+
+          <div class="form-group mb-6">
+            <label>Username</label>
+            <br>
+            {{ form.username|add_class:"input input-bordered w-full max-w-lg" }}
+          </div>
+
+          <div class="form-group mb-6">
+            <label>Email</label>
+            <br>
+            {{ form.email|add_class:"input input-bordered w-full max-w-lg" }}
+          </div>
+
+          <div class="form-group mb-6">
+            <label>Password</label>
+            <br>
+            {{ form.password1|add_class:"input input-bordered w-full max-w-lg" }}
+          </div>
+
+          <div class="form-group mb-6">
+            <label>Confirm Password</label>
+            <br>
+            {{ form.password2|add_class:"input input-bordered w-full max-w-lg" }}
+          </div>
+
+          {% if form.errors or form.non_field_errors %}
+          <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
+            {% for field in form %}
+              <p class="error">{{ field.errors }}</p>
+            {% endfor %}
+            <p class="error">{{ form.non_field_errors }}</p>
+          </div>
+          {% endif %}
+
+          <button class="btn btn-success w-full mt-4">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

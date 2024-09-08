@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background: #f0f2f5; /* Soft background color */
+  }
+  .container {
+    max-width: 600px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  .card-header {
+    background: linear-gradient(135deg, #007bff, #00d2d3);
+    color: #ffffff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  .card-header h2 {
+    font-size: 1.75rem;
+    margin: 0;
+  }
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .btn-success {
+    background: #28a745;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  .btn-success:hover {
+    background: #218838;
+    transform: scale(1.05);
+  }
+  .btn-success:focus {
+    box-shadow: none;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid #e0e0e0;
+  }
+</style>
+
+<div class="container pt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card shadow-lg border-light rounded-lg p-4 mt-5">
+        <div class="card-header text-center">
+          <h2 class="font-weight-bold mb-0">Create Account</h2>
+        </div>
+        <div class="card-body">
+
+          <form method="post" action=".">
+            {% csrf_token %}
+    
+            {% comment %} {{ form.as_p }} {% endcomment %}
+    
+    
+            <div class="mb-3">
+                <label class="inline-block mb-2">Username</label><br>
+                {{ form.username }}
+            </div>
+    
+            <div class="mb-3">
+                <label class="inline-block mb-2">Email</label><br>
+                {{ form.email }}
+            </div>
+    
+            <div class="mb-3">
+                <label class="inline-block mb-2">Password</label><br>
+                {{ form.password1 }}
+            </div>
+    
+            <div class="mb-3">
+                <label class="inline-block mb-2">Conf password</label><br>
+                {{ form.password2 }}
+            </div>
+    
+            {% if form.errors or form.non_field_errors %}
+            <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                {% for field in form  %}
+                    {{ field.errors }}
+                {% endfor %}
+    
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+    
+            <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+        </form>
+
+
+
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container pt-5">
+  <div class="row p-0 mt-4">
+    <!-- TODO Form -->
+    <div class="col-lg-4 mx-auto">
+      <div class="card glassmorphism shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-gradient-primary text-white text-center">
+          <h2 class="m-0">Add New TODO</h2>
+        </div>
+        <div class="card-body p-4">
+          <form action="/add-todo/" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <button type="submit" class="btn btn-gradient shadow-sm hover-scale">Add TODO</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO List -->
+    <div class="col-lg-8 mt-4">
+      {% if todos|length == 0 %}
+        <div class="alert alert-info text-center">
+          <p class="m-0" style="font-size: 24px; font-weight: 600;">No Todos</p>
+        </div>
+      {% else %}
+        <div class="card glassmorphism shadow-lg border-0 rounded-lg">
+          <div class="card-body p-4">
+            <table class="table table-bordered table-hover">
+              <thead class="bg-gradient-primary text-white">
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for todo in todos %}
+                <tr class="hover-row">
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ todo.title }}</td>
+                  <td>
+                    {% if todo.status == 'C' %}
+                    <span class="text-success font-weight-bold">Completed</span>
+                    {% else %}
+                    <span class="text-warning font-weight-bold">Pending</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ todo.priority }}</td>
+                  <td>
+                    <a href="delete-todo/{{ todo.id }}" title="Delete" class="text-danger hover-color">🗑️</a>
+                    {% if todo.status == 'P' %}
+                    <a href="change-status/{{ todo.id }}/C" title="Mark Completed" class="text-success hover-color">✅</a>
+                    {% else %}
+                    <a href="change-status/{{ todo.id }}/P" title="Mark Pending" class="text-warning hover-color">🕗</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Add custom styles -->
+<style>
+  body {
+    background: linear-gradient(135deg, #f5f7f9, #c3cfe2); /* Soft gradient background */
+    font-family: 'Poppins', sans-serif;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(15px);
+  }
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: #ffffff;
+  }
+  .btn-gradient {
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #0056b3, #0099ff);
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  .hover-row:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.02);
+    transition: transform 0.2s, background-color 0.3s;
+  }
+  .hover-color:hover {
+    color: #007bff;
+    transition: color 0.3s;
+  }
+</style>
+
+<!-- Add Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+{% endblock content %}

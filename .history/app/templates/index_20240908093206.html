@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container pt-5">
+  <div class="row p-0 mt-4">
+    <!-- TODO Form -->
+    <div class="col-lg-4 mx-auto">
+      <div class="card glassmorphism shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-gradient-primary text-white text-center">
+          <h2 class="m-0">Add New TODO</h2>
+          <p class="mb-0 text-light" style="font-size: 0.9rem;">Organize your tasks effectively</p>
+        </div>
+        <div class="card-body p-4">
+          <form action="/add-todo/" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <button type="submit" class="btn btn-gradient shadow-sm hover-scale">Add TODO</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO List -->
+    <div class="col-lg-8 mt-4">
+      {% if todos|length == 0 %}
+        <div class="alert alert-info text-center">
+          <p class="m-0" style="font-size: 24px; font-weight: 600;">No Todos</p>
+        </div>
+      {% else %}
+        <div class="card glassmorphism shadow-lg border-0 rounded-lg">
+          <div class="card-body p-4">
+            <table class="table table-bordered table-hover">
+              <thead class="bg-gradient-header text-white">
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for todo in todos %}
+                <tr class="hover-row">
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ todo.title }}</td>
+                  <td>
+                    {% if todo.status == 'C' %}
+                    <span class="text-success font-weight-bold">Completed</span>
+                    {% else %}
+                    <span class="text-warning font-weight-bold">Pending</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ todo.priority }}</td>
+                  <td>
+                    <a href="delete-todo/{{ todo.id }}" title="Delete" class="text-danger hover-color">🗑️</a>
+                    {% if todo.status == 'P' %}
+                    <a href="change-status/{{ todo.id }}/C" title="Mark Completed" class="text-success hover-color">✅</a>
+                    {% else %}
+                    <a href="change-status/{{ todo.id }}/P" title="Mark Pending" class="text-warning hover-color">🕗</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Add custom styles -->
+<style>
+  body {
+    background: linear-gradient(135deg, #f0f4f8, #d0e1f9); /* Soft blue gradient for a clean look */
+    font-family: 'Poppins', sans-serif;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(15px);
+  }
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #ff6f61, #d84a77); /* Warm coral and pink gradient */
+  }
+  .bg-gradient-header {
+    background: linear-gradient(135deg, #5a2d81, #9c3d7d); /* Rich purple-red gradient */
+  }
+  .btn-gradient {
+    background: linear-gradient(135deg, #5a2d81, #9c3d7d); /* Matching button gradient */
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #4a1b60, #823c65); /* Darker gradient on hover */
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  .hover-row {
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  .hover-row:hover {
+    background-color: #f9f9f9;
+    transform: translateY(-2px);
+  }
+  .hover-color:hover {
+    color: #ff6f61; /* Coral hover color */
+    transition: color 0.3s;
+  }
+</style>
+
+<!-- Add Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+{% endblock content %}
